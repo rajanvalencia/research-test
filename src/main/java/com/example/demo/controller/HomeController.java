@@ -56,7 +56,7 @@ public class HomeController {
 		results.put("SHA", sha.generate(password, salt));
 		results.put("PBKFD2", pbkfd2.generate(password, salt));
 		results.put("Bcrypt", bcrypt.generate(password, "$2a$10$" + salt));
-		results.put("Scrypt", scrypt.generate(password, salt));
+		results.put("Scrypt", scrypt.generate(password));
 		
 		return results;
 	}

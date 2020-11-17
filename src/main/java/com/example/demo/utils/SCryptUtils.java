@@ -2,7 +2,8 @@
 
 package com.example.demo.utils;
 
-import static com.example.demo.codec.Base64.*;
+import static com.example.demo.codec.Base64.decode;
+import static com.example.demo.codec.Base64.encode;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -41,8 +42,9 @@ public class SCryptUtils {
      *
      * @return The hashed password.
      */
-    public static String scrypt(String passwd, byte[] salt, int N, int r, int p) {
-        try {
+    public static String scrypt(String passwd, int N, int r, int p) {
+    	try {
+            byte[] salt = new byte[16];
             SecureRandom.getInstance("SHA1PRNG").nextBytes(salt);
 
             byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, 32);

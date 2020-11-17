@@ -11,11 +11,11 @@ import com.example.demo.utils.SCryptUtils;
 
 @Service
 public class ScryptService {
-    public Map<String, Object> generate(String passwordToHash, String salt) {
+    public Map<String, Object> generate(String passwordToHash) {
     	Map<String, Object> results = new HashMap<>();
 		
 		Instant start = Instant.now();
-        String generatedSecuredPasswordHash = SCryptUtils.scrypt(passwordToHash, salt.getBytes(), 16, 16, 16);
+        String generatedSecuredPasswordHash = SCryptUtils.scrypt(passwordToHash, 16, 16, 16);
         Instant end = Instant.now();
         Long time = Duration.between(start, end).toNanos();
         Long time1 = Duration.between(start, end).toMillis();
