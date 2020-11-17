@@ -42,18 +42,17 @@ public class SCryptUtils {
      *
      * @return The hashed password.
      */
-    public static String scrypt(String passwd, int N, int r, int p) {
+    public static String scrypt(String passwd, String salt, int N, int r, int p) {
     	try {
-            byte[] salt = new byte[16];
-            SecureRandom.getInstance("SHA1PRNG").nextBytes(salt);
+            SecureRandom.getInstance("SHA1PRNG").nextBytes(salt.getBytes());
 
-            byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt, N, r, p, 32);
+            byte[] derived = SCrypt.scrypt(passwd.getBytes("UTF-8"), salt.getBytes(), N, r, p, 32);
 
             String params = Long.toString(log2(N) << 16L | r << 8 | p, 16);
 
-            StringBuilder sb = new StringBuilder((salt.length + derived.length) * 2);
+            StringBuilder sb = new StringBuilder((salt.getBytes().length + derived.length) * 2);
             sb.append("$s0$").append(params).append('$');
-            sb.append(encode(salt)).append('$');
+            sb.append(salt).append('$'); // sb.append(encode(salt)).append('$');             <---- previous version
             sb.append(encode(derived));
 
             return sb.toString();
